@@ -211,7 +211,7 @@
 
       <transition name ="fade" appear>
         <div v-if="gsapers.moveScene == 67 && started" id="contactsvg" class="grid grid-cols-3">
-          <div id="links"><a href="https://github.com/fpimentel-threejs"><img src="/assets/githublogo copy.svg"/></a></div>
+          <div id="links"><a href="https://github.com/fpimentel-threejs"><img src="/assets/githublogo.svg"/></a></div>
           <div id="links"><a href="https://www.linkedin.com/in/fpimentel/"><img src="/assets/linkedinlogo copy.svg"/></a></div>
           <div id="links"><a href="https://www.instagram.com/rxnando/"><img src="/assets/instagramlogo copy.svg"/></a></div>
         </div>
