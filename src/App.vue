@@ -318,7 +318,6 @@ onMounted(() => {
 #firsthead {
   font-family: 'Montserrat', sans-serif;
   background-color: rgba(255,255,255,.6);
-  border: solid black 1px;
   margin: 15vh 5vw;
   width: 90vw;
 }
@@ -326,7 +325,6 @@ onMounted(() => {
 #secondhead {
   font-family: 'Montserrat', sans-serif;
   background-color: rgba(255,255,255,.6);
-  border: solid black 1px;
   margin: 40vh 5vw 10vh 5vw;
   width: 90vw;
   padding-left: 45vw;
