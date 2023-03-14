@@ -1,4 +1,69 @@
 <template>
+
+  <div id="htmlPage">
+    <div v-if="!started" id="homePage" class="">
+      <transition name ="fade" appear>
+        <div id="firsthead" class="text-purple-600 text-2xl">ALL YOUR 3D NEEDS IN</div>
+      </transition>
+      <transition name ="fade" appear>
+        <div id="secondhead" class="text-purple-600 text-3xl">PLACE</div>
+      </transition>
+      <transition name ="fade" appear>
+        <button class="px-12 btn btn-circle glass border-solid border-10" id="startButton"
+                @click="
+                    //move cam
+                    gsap.to(camPos, {
+                    x: 0, y:-55, z:35, duration: .8});
+                    //move mesh
+                    gsap.to(meshPos, {
+                    x: 50, y:20, duration: .8});
+                    //if started
+                    started = true
+                    ">START
+        </button>
+      </transition>
+      <transition name ="fade" appear>
+        <div id="signature" class="text-purple-600 text-xs">By Fernando Pimentel</div>
+      </transition>
+    </div>
+
+    <transition name ="fade" appear>
+      <div v-if="letterPicked === 'O' && started" id="O1head" class="text-purple-600 text-xl">NOT ONLY CAN YOUR 3D WEBSITE
+        BE CREATED, BUT 3D ASSETS CAN BE PROVIDED TO YOU AS WELL</div>
+    </transition>
+    <transition name ="fade" appear>
+      <div v-if="letterPicked === 'O' && started" id="O2head" class="text-purple-600 text-xl">ANIMATIONS AND ARMATURES CAN
+        BE IMPLEMENTED DIRECTLY INTO THE ASSETS UPON CREATION, OR BE APPLIED WITHIN YOUR WEBSITE AFTER THE ASSETS HAVE
+        BEEN CREATED</div>
+    </transition>
+    <transition name ="fade" appear>
+      <div v-if="letterPicked === 'N'" id="Nhead" class="text-purple-600 text-xl bg-black">I PROVIDE COMPLEX
+        MODELS SUCH AS VEGETATION...</div>
+    </transition>
+    <transition name ="fade" appear>
+      <div v-if="letterPicked ==='E'" id="Ehead" class="text-purple-600 text-xl">...AND GEOMETRIC
+        MODELS SUCH AS BUILDINGS, VEHICLES, ETC.</div>
+    </transition>
+    <transition name ="fade" appear>
+      <div v-if="letterPicked ==='E'" id="Ehead2" class="text-purple-600 text-xl">CONTACT ME</div>
+    </transition>
+
+    <transition name ="fade" appear>
+      <div v-if="letterPicked ==='E'" id="contactsvg" class="grid grid-cols-3">
+        <div id="links"><a href="https://github.com/fpimentel-threejs"><img src="/assets/githublogo.svg"/></a></div>
+        <div id="links"><a href="https://www.linkedin.com/in/fpimentel/"><img src="/assets/linkedinlogo.svg"/></a></div>
+        <div id="links"><a href="https://www.instagram.com/rxnando/"><img src="/assets/instagramlogo.svg"/></a></div>
+      </div>
+    </transition>
+    <transition name ="fade" appear>
+      <div id="radio" class="grid grid-cols-3">
+        <input v-if="started" id="radioBut" v-model="letterPicked" value="O" name="letterPicker" type="radio" class="radio radio-success" @click="gsap.to(gsapers, {moveScene: 0, duration: .3})" checked />
+        <input v-if="started" id="radioBut" v-model="letterPicked" value="N" name="letterPicker" type="radio" class="radio radio-success" @click="gsap.to(gsapers, {moveScene: 35, duration: .3})"/>
+        <input v-if="started" id="radioBut" v-model="letterPicked" value="E" name="letterPicker" type="radio" class="radio radio-success" @click="gsap.to(gsapers, {moveScene: 67, duration: .3})"/>
+      </div>
+    </transition>
+  </div>
+
   <Renderer ref="rendererC" antialias :orbit-ctrl="{ enabled: false }" resize="window">
     <Camera :position="{ x: camPos.x, y: camPos.y, z: camPos.z }" />
     <Scene ref="sceneRef" :background="0xffffff">
@@ -8,7 +73,7 @@
       <Group
           :position="{x: -gsapers.moveScene}"
       >
-        <div v-if="camPos.z == 35">
+        <div v-if="camPos.z === 35">
           <GltfModel
               src="/assets/bigtree.gltf"
               @load="onReady"
@@ -161,61 +226,6 @@
           <LambertMaterial :color="0xd6de3b"/>
         </Text>
       </Group>
-      <transition name ="fade" appear>
-      <button v-if="!started" class="px-12 btn btn-circle glass border-solid border-10" id="startButton"
-              @click="
-                  //move cam
-                  gsap.to(camPos, {
-                  x: 0, y:-55, z:35, duration: .8});
-                  //move mesh
-                  gsap.to(meshPos, {
-                  x: 50, y:20, duration: .8});
-                  //if started
-                  started = true
-                  ">START
-      </button>
-      </transition>
-      <input v-if="started" id="radio1" v-model="letterPicked" value="'O'" name="letterPicker" type="radio" class="radio radio-success" @click="gsap.to(gsapers, {moveScene: 0, duration: .3})" checked />
-      <input v-if="started" id="radio2" v-model="letterPicked" value="'N'" name="letterPicker" type="radio" class="radio radio-success" @click="gsap.to(gsapers, {moveScene: 35, duration: .3})"/>
-      <input v-if="started" id="radio3" v-model="letterPicked" value="'E'" name="letterPicker" type="radio" class="radio radio-success" @click="gsap.to(gsapers, {moveScene: 67, duration: .3})"/>
-
-      <transition name ="fade" appear>
-      <div v-if="!started" id="firsthead" class="text-purple-600 text-2xl">ALL YOUR 3D NEEDS IN</div>
-      </transition>
-      <transition name ="fade" appear>
-      <div v-if="!started" id="secondhead" class="text-purple-600 text-3xl">PLACE</div>
-      </transition>
-      <transition name ="fade" appear>
-        <div v-if="!started" id="signature" class="text-purple-600 text-xs">By Fernando Pimentel</div>
-      </transition>
-      <transition name ="fade" appear>
-        <div v-if="gsapers.moveScene == 0 && started" id="O1head" class="text-purple-600 text-xl">NOT ONLY CAN YOUR 3D WEBSITE
-          BE CREATED, BUT 3D ASSETS CAN BE PROVIDED TO YOU AS WELL</div>
-      </transition>
-      <transition name ="fade" appear>
-        <div v-if="gsapers.moveScene == 0 && started" id="O2head" class="text-purple-600 text-xl">ANIMATIONS AND ARMATURES CAN
-          BE IMPLEMENTED DIRECTLY INTO THE ASSETS UPON CREATION, OR BE APPLIED WITHIN YOUR WEBSITE AFTER THE ASSETS HAVE
-          BEEN CREATED</div>
-      </transition>
-      <transition name ="fade" appear>
-        <div v-if="gsapers.moveScene == 35 && started" id="Nhead" class="text-purple-600 text-xl bg-black">I PROVIDE COMPLEX
-        MODELS SUCH AS VEGETATION...</div>
-      </transition>
-      <transition name ="fade" appear>
-        <div v-if="gsapers.moveScene == 67 && started" id="Ehead" class="text-purple-600 text-xl">...AND GEOMETRIC
-        MODELS SUCH AS BUILDINGS, VEHICLES, ETC.</div>
-      </transition>
-      <transition name ="fade" appear>
-        <div v-if="gsapers.moveScene == 67 && started" id="Ehead2" class="text-purple-600 text-xl">CONTACT ME</div>
-      </transition>
-
-      <transition name ="fade" appear>
-        <div v-if="gsapers.moveScene == 67 && started" id="contactsvg" class="grid grid-cols-3">
-          <div id="links"><a href="https://github.com/fpimentel-threejs"><img src="/assets/githublogo.svg"/></a></div>
-          <div id="links"><a href="https://www.linkedin.com/in/fpimentel/"><img src="/assets/linkedinlogo.svg"/></a></div>
-          <div id="links"><a href="https://www.instagram.com/rxnando/"><img src="/assets/instagramlogo.svg"/></a></div>
-        </div>
-      </transition>
 
 
 
@@ -226,7 +236,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { GridHelper } from 'three'
-import { Box, Torus, Group, GltfModel, Camera, LambertMaterial, PointLight, Renderer, Scene } from 'troisjs'
+import { AmbientLight, Box, Torus, Group, GltfModel, Camera, LambertMaterial, PointLight, Renderer, Scene } from 'troisjs'
 import gsap from 'gsap'
 
 const meshPos = ref({
@@ -250,7 +260,7 @@ const sceneRef = ref()
 const carRef = ref()
 const carRotation = ref()
 const carRotation2 = ref()
-const letterPicked = ref('')
+const letterPicked = ref('O')
 const started = ref(false)
 const gridHelper = new GridHelper( 1000, 400, 0xe5e4e2, 0xe5e4e2 );
 
@@ -276,87 +286,82 @@ onMounted(() => {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200&display=swap');
 
+#htmlPage{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 100vw;
+  height: 100vh;
+}
+
+#homePage{
+  position: absolute;
+}
+
 #startButton {
-  position: absolute;
-  top: 75%;
-  left: 45%;
-  width: 10%;
-  z-index: 3;
+  width: 20vw;
+  margin: 0 40vw 5vh 35vw;
 }
 
-#radio1 {
+#radio{
   position: absolute;
-  left: 30%;
-  top: 90%;
-  z-index: 3;
+  width: 100vw;
+  margin: 90vh 0;
+  height: 5vh;
 }
 
-#radio2 {
-  position: absolute;
-  left: 45%;
-  top: 90%;
-  z-index: 3;
-}
-
-#radio3 {
-  position: absolute;
-  left: 60%;
-  top: 90%;
-  z-index: 3;
+#radioBut{
+  margin: 0 15vw;
 }
 
 #firsthead {
-  position: absolute;
-  left: 10%;
-  top: 10%;
-  z-index: 3;
   font-family: 'Montserrat', sans-serif;
-  background-color: rgba(255,255,255,.6)
+  background-color: rgba(255,255,255,.6);
+  border: solid black 1px;
+  margin: 15vh 5vw;
+  width: 90vw;
 }
 
 #secondhead {
-  position: absolute;
-  left: 50%;
-  top: 60%;
-  z-index: 3;
   font-family: 'Montserrat', sans-serif;
-  background-color: rgba(255,255,255,.6)
+  background-color: rgba(255,255,255,.6);
+  border: solid black 1px;
+  margin: 40vh 5vw 10vh 5vw;
+  width: 90vw;
+  padding-left: 45vw;
 }
 
 #signature {
-  position: absolute;
-  left: 85%;
-  top: 90%;
-  z-index: 3;
   font-family: 'Montserrat', sans-serif;
-  background-color: rgba(255,255,255,.6)
+  background-color: rgba(255,255,255,.6);
+  margin: 0 0 0 80vw;
 }
 
 #O1head {
   position: absolute;
-  left: 10%;
-  top: 5%;
-  width: 60%;
-  z-index: 3;
+  width: 60vw;
+  height: 20vh;
+  margin: 5vh 5vw;
   font-family: 'IBM Plex Mono', monospace;
   background-color: rgba(255,255,255,.6)
 }
 
 #O2head {
   position: absolute;
-  left: 10%;
-  top: 25%;
-  width: 25%;
-  z-index: 3;
+  width: 25vw;
+  min-width: 30vw;
+  height: 60vh;
   font-family: 'IBM Plex Mono', monospace;
-  background-color: rgba(255,255,255,.6)
+  background-color: rgba(255,255,255,.6);
+  margin: 30vh 0 0 5vw;
 }
 
 #Nhead {
   position: absolute;
-  left: 10%;
-  top: 10%;
-  width: 20%;
+  margin: 5vh 5vw 65vh 5vw;
+  width: 30vw;
+  height: 20vh;
   z-index: 3;
   font-family: 'IBM Plex Mono', monospace;
   background-color: rgba(255,255,255,.6);
@@ -364,20 +369,17 @@ onMounted(() => {
 
 #Ehead {
   position: absolute;
-  left: 70%;
-  top: 10%;
-  width: 25%;
-  z-index: 3;
+  margin: 5vh 5vw 0 70vw;
+  width: 30vw;
+  height: 20vh;
   font-family: 'IBM Plex Mono', monospace;
   background-color: rgba(255,255,255,.6)
 }
 
 #Ehead2 {
   position: absolute;
-  left: 75%;
-  top: 40%;
-  width: 25%;
-  z-index: 3;
+  width: 30vw;
+  margin: 30vh 5vw 0 70vw;
   font-family: 'Montserrat', sans-serif;
   border-bottom: solid 1px;
   background-color: rgba(255,255,255,.6)
@@ -385,16 +387,14 @@ onMounted(() => {
 
 #contactsvg {
   position: absolute;
-  left: 70%;
-  top: 52%;
-  width: 25%;
-  z-index: 3;
+  width: 30vw;
+  margin: 40vh 5vw 0 70vw;
 }
 
 #links {
-  width: 65%;
-  padding: 10%;
-  background-color: rgba(255,255,255,.4);
+  margin: 1.5vw;
+  padding: 1vw;
+  background-color: rgba(255,255,255,.6);
   border-radius: 50%;
 }
 
